@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Product Analyzer</title>
+    
+    <!-- Tailwind CSS (via CDN for immediate usage) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configure Tailwind Theme -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neutral: {
+                            850: '#1f1f1f',
+                            900: '#171717',
+                            950: '#0a0a0a',
+                        }
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Icons (Lucide) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-neutral-950 text-neutral-200 font-sans antialiased selection:bg-white selection:text-black">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 border-b border-white/10 bg-neutral-950/80 backdrop-blur-xl">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center gap-3 cursor-pointer group">
+                <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-black shadow-[0_0_15px_rgba(255,255,255,0.15)] transition-transform group-hover:scale-105">
+                    <i data-lucide="activity" class="w-5 h-5"></i>
+                </div>
+                <span class="font-bold text-white text-xl tracking-tight">
+                    Analyzer<span class="text-neutral-500">.AI</span>
+                </span>
+            </div>
+
+            <!-- Nav Links -->
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-400">
+                <a href="#" class="hover:text-white transition-colors">Intelligence</a>
+                <a href="#" class="hover:text-white transition-colors">API Access</a>
+                <a href="#" class="hover:text-white transition-colors">Enterprise</a>
+            </div>
+
+            <!-- Action -->
+            <button class="hidden sm:block px-6 py-2 bg-white text-black text-sm font-bold rounded-full hover:bg-neutral-200 transition-transform active:scale-95">
+                Launch App
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 relative">
+        
+        <!-- Background Glow Effect -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-white/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <!-- Hero Section -->
+        <div class="pt-24 pb-16 flex flex-col items-center text-center relative z-10">
+            
+            <!-- Status Pill -->
+            <div class="mb-8 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-neutral-900/80 border border-white/10 backdrop-blur-md">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                </span>
+                <span class="text-xs font-bold text-neutral-300 tracking-wider uppercase">System Online</span>
+            </div>
+
+            <!-- Title -->
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tighter text-white mb-6">
+                Product Analytics <br />
+                <span class="text-transparent bg-clip-text bg-gradient-to-b from-neutral-200 to-neutral-600">
+                    Redefined.
+                </span>
+            </h1>
+            
+            <p class="max-w-xl mx-auto text-lg text-neutral-500 mb-10">
+                Enter an Amazon URL or keyword to unlock deep insights, sentiment analysis, and price tracking.
+            </p>
+
+            <!-- Search Bar Container -->
+            <div id="search-container" class="relative w-full max-w-2xl group transition-all duration-300">
+                <!-- Animated Gradient Border -->
+                <div class="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-white/20 via-neutral-500/20 to-white/20 opacity-0 transition-opacity duration-500 group-focus-within:opacity-100"></div>
+                
+                <div class="relative flex items-center bg-neutral-900 rounded-2xl shadow-2xl border border-white/10 overflow-hidden p-2">
+                    <div class="pl-4 text-neutral-500">
+                        <i data-lucide="search" class="w-6 h-6"></i>
+                    </div>
+                    <input 
+                        type="text" 
+                        id="search-input"
+                        placeholder="Paste URL or search keyword..." 
+                        class="w-full py-4 px-4 text-lg bg-transparent placeholder-neutral-600 text-white focus:outline-none font-medium"
+                        autocomplete="off"
+                    >
+                    <button class="px-6 py-3 bg-white text-black font-bold rounded-xl hover:bg-neutral-200 transition-colors flex items-center gap-2">
+                        Analyze
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard / Results Section -->
+        <div class="pb-24 border-t border-white/5 pt-8">
+            
+            <!-- Filter Bar -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+                <div class="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 no-scrollbar filter-scroll">
+                    <button class="flex items-center gap-2 px-4 py-2 bg-white text-black rounded-full text-sm font-bold hover:bg-neutral-200 transition-colors whitespace-nowrap">
+                        <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
+                        <span>Filters</span>
+                    </button>
+                    
+                    <button class="filter-btn active">Sentiment</button>
+                    <button class="filter-btn">Price Range</button>
+                    <button class="filter-btn">Rating</button>
+                </div>
+            </div>
+
+            <!-- Grid Container (Skeletons will be injected here) -->
+            <div id="results-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- JavaScript will populate this -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="mt-20 flex justify-center">
+                <button class="group flex items-center gap-2 px-8 py-4 bg-neutral-900 border border-white/10 rounded-full text-sm font-bold text-white hover:bg-neutral-800 transition-all">
+                    <span>Load More Data</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4 group-hover:translate-y-0.5 transition-transform"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- App Logic -->
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+/* frontend/style.css */
+
+/* Custom Filter Button Styles */
+.filter-btn {
+    @apply flex items-center gap-2 px-4 py-2 bg-neutral-900 border border-white/10 rounded-full text-sm font-medium text-neutral-400 hover:text-white hover:border-white/20 transition-colors whitespace-nowrap;
+    /* Note: If you aren't using a CSS build step, @apply won't work natively. 
+       Below is the standard CSS equivalent for the buttons in index.html */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #171717; /* neutral-900 */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #a3a3a3; /* neutral-400 */
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.filter-btn:hover {
+    color: white;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Hide scrollbar for chrome/safari/opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Custom Shine Animation for Skeletons */
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.shimmer-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.shimmer-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0,
+        rgba(255, 255, 255, 0.03) 20%,
+        rgba(255, 255, 255, 0.06) 60%,
+        rgba(255, 255, 255, 0)
+    );
+    animation: shimmer 2s infinite;
+}
